@@ -7,6 +7,9 @@
 <body>
 	<h1>Sistema de Exames</h1>
 	<form method="POST" action="exames.php">
+         <label for="nome">ID</label>
+		 <input type="text" id="id" name="id"><br>
+
 		<label for="nome">Nome:</label>
 		<input type="text" id="nome" name="nome"><br>
 
@@ -29,6 +32,7 @@
         $conn = mysqli_connect($servername, $username, $password ,$database);
 
         //Declarando as variáveis
+        $id = $_POST['id'];
         $nome = $_POST['nome'];
         $data = $_POST['data'];
         $resultado = $_POST['resultado'];
@@ -50,15 +54,17 @@
             if($mode == 'create'){
                 //Crie um exame
                 if(isset($_POST['create'])){ 
+                    $id = mysqli_real_escape_string($conn, $_POST['id']);
                     $nome = mysqli_real_escape_string($conn, $_POST['nome']); //envia pro banco dados a variável nome com um conjunto de dados do tipo string.
                     $data = mysqli_real_escape_string($conn, $_POST['data']);
                     $resultado = mysqli_real_escape_string($conn, $_POST['resultado']);
+
 
                 }
             }
             
 
-            $sql = "INSERT INTO exames (nome, data, resultado) VALUES ('$nome','$data', '$resultado' )";
+            $sql = "INSERT INTO exames (id, nome, data, resultado) VALUES ('$id','$nome','$data', '$resultado' )";
 
             //Verificando a condicional de consulta do banco de dados exames
 
@@ -67,6 +73,41 @@
             }else{
                 echo "Erro ao criar o exame:".mysqli_error($conn);
             }
+
+
+            //Atualizar um registro no banco de dados
+
+            $sql = "UPDATE exames SET nome='$nome', data='$data', resultado='$resultado' WHERE id='$id'";
+
+            //Verifica se a consulta no banco de dados foi feita através da conexão e o comando de atualizar
+
+            if (mysqli_query($conn, $sql)){
+                echo "Exame atualizado com sucesso!";
+            }else{
+                echo"Erro ao atualizar o exame!";
+            }
+
+
+            // Deletando exames
+        
+            if($mode =='delete '){
+                //exclua o exame
+
+                if(isset($_POST['delete'])){
+                    $id = mysqli_real_escape_string($conn, $_POST['id']);
+
+                    $sql = "DELETE FROM exames WHERE id=$id";
+
+                    if(mysqli_query($conn, $sql)){
+                        echo "Exame excluído com sucesso !";
+                    }else{
+                        echo "Erro ao excluir o exame: ". mysqli_error($conn);
+                    }
+                }
+            }
+
+            //Fechar a conexão do banco de dados
+            mysqli_close($conn);
             
 
     
