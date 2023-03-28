@@ -7,14 +7,14 @@
 <body>
 	<h1>Sistema de Exames</h1>
 	<form method="POST" action="exames.php">
-         <label for="nome">ID</label>
-		 <input type="text" id="id" name="id"><br>
+        <label for="id">ID</label>
+		<input type="text" id="id" name="id" placeholder="Campo não obrigatório"><br>
 
 		<label for="nome">Nome:</label>
-		<input type="text" id="nome" name="nome"><br>
+		<input type="text" id="nome" name="nome" placeholder="Campo obrigatório"><br>
 
 		<label for="resultado">Resultado:</label>
-		<input type="text" id="resultado" name="resultado"><br>
+		<input type="text" id="resultado" name="resultado" placeholder="Campo Obrigatório"><br>
 
 		<label for="data">Data:</label>
 		<input type="date" id="data" name="data"><br>
@@ -49,10 +49,11 @@
 
             $mode = isset($_GET['mode']) ? $_GET['mode']: ""; //Vai verifica se a váriável foi definida, se variável mode foi definida então ele executa a requisição GET, caso contrário vai retorna vazio.
 
-            // verifica o modo
+            // validar o modo em php
 
             if($mode == 'create'){
-                //Crie um exame
+                //Crie um exame 
+                //condição aninhada
                 if(isset($_POST['create'])){ 
                     $id = mysqli_real_escape_string($conn, $_POST['id']);
                     $nome = mysqli_real_escape_string($conn, $_POST['nome']); //envia pro banco dados a variável nome com um conjunto de dados do tipo string.

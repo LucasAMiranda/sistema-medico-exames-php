@@ -10,14 +10,16 @@
 <body>
     <h1>Login de Acesso</h1>
 
-    <form method="POST" action="form.php">
+    <form method="POST" action="">
         <label>Nome: </label>
         <input type="text" name="nome" id="nome" /><br/>
         <label>Idade: </label>
         <input type="number" name="idade" id="idade"><br />
         <label>Email: </label>    
         <input type="email" name="email" id="email"><br />
-        <input type="submit" value="Enviar" />
+        <button id="salvar" value="Enviar" onclick="salvarDados()">Salvar</button>
     </form>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
